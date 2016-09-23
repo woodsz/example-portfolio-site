@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example Portfilo Site</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- attach our stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- the header -->
+    <header>
+
+        <!-- our main logo -->
+        <a id="logo" href="index.html">
+            <img src="img/Woods_As_King_Thumbnail.png" alt="Logo">
+            <span>Example Site</span>
+        </a>
+
+        <!-- main navigation links -->
+        <nav>
+            <ul>
+                <li><a href="#">Skills</a></li>
+                <li><a href="#">Gallary</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <!-- the content -->
+    <main>
+
+        <!-- hero content -->
+        <div class="hero">
+            <!-- content for the hero -->
+            <div class="hero-content">
+                <h1>Example of Hero Text</h1>
+                <p>Using big eye catching images and text.</p>
+
+                <a href="#">Learn More</a>
+                <a href="#">Sign Up</a>
+            </div>
+        </div>
+
+        <!-- skills section -->
+        <div class="site-section">
+        <div class="site-section-inside">
+
+            <div class="section-header">
+                <h2>Skills</h2>
+            </div>
+
+            <div class="skills-box">
+                <img src="img/art.png" alt="Traditional Art">
+                <h5>Traditional Art</h5>
+                <p>Some work of more traditional methods like pencil, ink, and, paints.</p>
+            </div>
+
+            <div class="skills-box">
+                <img src="img/code.png" alt="Programming">
+                <h5>Programming</h5>
+                <p>The ability to code in many different languages, one being Java.</p>
+            </div>
+
+            <div class="skills-box">
+                <img src="img/team.png" alt="Team Work">
+                <h5>Team Work</h5>
+                <p>The best quality to have is to be able to work with other poeple.</p>
+            </div>
+
+        </div>
+        </div>
+
+        <!-- customer comments section -->
+        <div class="site-section site-section-secondary">
+        <div class="site-section-inside">
+
+            <div class="section-header">
+                <h2>Customers</h2>
+            </div>
+
+            <div class="customer-box">
+                <div class="customer-content">
+                    His service is by far the most influential I've ever seen.
+                </div>
+                <div class="customer-author">
+                    <img src="img/Woods_As_King_Thumbnail.png" alt="Default picture">
+                    <h5></h5>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="customer-box">
+                <div class="customer-content">
+                    His service is by far the most influential I've ever seen.
+                </div>
+                <div class="customer-author">
+                    <img src="img/Woods_As_King_Thumbnail.png" alt="Default picture">
+                    <h5></h5>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="customer-box">
+                <div class="customer-content">
+                    His service is by far the most influential I've ever seen.
+                </div>
+                <div class="customer-author">
+                    <img src="img/Woods_As_King_Thumbnail.png" alt="Default picture">
+                    <h5></h5>
+                    <span></span>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+    </main>
+
+    <!-- the footer -->
+    <footer>
+        <img src="img/Woods_As_King_Thumbnail.png" alt="Footer Logo">
+        <span>Example Site<br>Copyright &copy; 2016-Whenever </span>
+    </footer>
+    
+    <!-- javascript to retreive random people data to populate the customer section -->
+    <script lang="javascript">
+    window.onload = function(){
+      
+      //get all customer elements
+      var x = document.getElementsByClassName("customer-box");
+      var y = document.getElementsByClassName("site-section-secondary");      
+      
+      requestRandomUsers();
+                  
+      //function to make the ajax request to Random User Generator API      
+      function requestRandomUsers() {
+        console.log("Function requestRandomUsers started...");
+        var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var obj = JSON.parse(this.responseText);
+              
+              for(var i=0;i<3;i++){
+                  //display user first and last names
+                  x[i].getElementsByTagName("h5")[0].innerHTML = 
+                  (obj.results[i].name.first).toUpperCase() +" " + 
+                  (obj.results[i].name.last).toUpperCase();
+                  
+                  //display email address
+                  x[i].getElementsByTagName("span")[0].innerHTML = obj.results[i].email
+                  
+                  //display thumbnail picture
+                  x[i].getElementsByTagName("img")[0].src = obj.results[i].picture.thumbnail;
+              }
+            console.log("...requestRandomUsers finished");  
+            y[0].style.visibility = "visible";  
+            }
+          };
+          //grabbing random user data for url
+          xhttp.open("GET", "https://randomuser.me/api/?results=3", true);
+          xhttp.send();
+      }      
+    }    
+    </script>
+    
+</body>
+</html>
